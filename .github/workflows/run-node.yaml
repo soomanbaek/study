@@ -22,6 +22,19 @@ jobs:
         with:
           node-version: '14'  # 사용할 Node.js 버전
 
+      - name: Get new files
+        id: get_new_files
+        run: |
+          echo "New files in the last commit:"
+          NEW_FILES=$(git diff-tree --no-commit-id --name-status -r HEAD | grep '^A' | awk '{print $2}')
+          echo "new_files=$NEW_FILES" >> $GITHUB_ENV
+
+      - name: Set environment variables
+        env:
+          USER_NAME: ${{ github.ref }}
+          FILE_NAME: ${{ env.new_files }}
+
+
       - name: Install dependencies
         run: npm install  # 필요한 경우 dependencies 설치
 
