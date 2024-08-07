@@ -1,0 +1,28 @@
+name: Run Node.js Application
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시할 때 실행
+  pull_request:
+    branches:
+      - main  # main 브랜치에 대한 PR이 열릴 때 실행
+
+jobs:
+  run-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # 사용할 Node.js 버전
+
+      - name: Install dependencies
+        run: npm install  # 필요한 경우 dependencies 설치
+
+      - name: Run application
+        run: node index.js  # Node.js 애플리케이션 실행
