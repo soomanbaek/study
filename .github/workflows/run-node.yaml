@@ -31,9 +31,9 @@ jobs:
           
           # Check if any new files were found
           if [ -z "$NEW_FILES" ]; then
-            echo "new_files=" >> $GITHUB_ENV
+            echo "NEW_FILES=" >> $GITHUB_ENV
           else
-            echo "new_files=${NEW_FILES}" >> $GITHUB_ENV
+            echo "NEW_FILES=${NEW_FILES}" >> $GITHUB_ENV
           fi
     
       
@@ -53,4 +53,4 @@ jobs:
         run: node index.js  # Node.js 애플리케이션 실행
         env:
           USER_NAME: ${{ env.BRANCH_NAME }}
-          FILE_NAME: ${{ env.new_files }}
+          FILE_NAME: ${{ env.NEW_FILES }}
