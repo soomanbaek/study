@@ -20,9 +20,10 @@ jobs:
       - name: Get new files
         id: get_new_files
         run: |
-          echo "New files in the last commit:"
-          NEW_FILES=$(git diff-tree --no-commit-id --name-status -r HEAD | grep '^A' | awk '{print $2}')
-          echo "NEW_FILES=$NEW_FILES" >> $GITHUB_ENV
+          # Get the list of newly added files
+          NEW_FILES=$(git diff --name-status HEAD^ HEAD | grep '^A' | awk '{print $2}')
+          echo "new_files=${NEW_FILES}" >> $GITHUB_ENV
+      
 
       - name: Set branch name
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -39,4 +40,4 @@ jobs:
         run: node index.js  # Node.js 애플리케이션 실행
         env:
           USER_NAME: ${{ env.BRANCH_NAME }}
-          FILE_NAME: ${{ env.NEW_FILES }}
+          FILE_NAME: ${{ env.new_files }}
