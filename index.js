@@ -10,7 +10,7 @@ async function run(userName, fileString) {
 
     filePaths = extractFilePathsFromString(fileString);
 
-    for (const filePath of newFiles) {
+    for (const filePath of filePaths) {
       const problemName = getProblemName(filePath);
       const targetPage = getTargetPage(pages, problemName);
 
