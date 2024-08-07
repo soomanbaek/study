@@ -5,6 +5,7 @@ on:
     branches:
       - main  # main 브랜치에 푸시할 때 실행
       - 백수만
+      - 김은호
   pull_request:
     branches:
       - main  # main 브랜치에 대한 PR이 열릴 때 실행
