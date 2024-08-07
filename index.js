@@ -12,6 +12,7 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
 
     console.log(newFileString);
     newFiles = newFileString.split(',').pop();
+    console.log(newFiles);
 
     for (const problemName of newFiles) {
       console.log(problemName);
