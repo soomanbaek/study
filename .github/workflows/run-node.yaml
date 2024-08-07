@@ -20,8 +20,14 @@ jobs:
       - name: Get new files
         id: get_new_files
         run: |
-          # Get the list of newly added files
-          NEW_FILES=$(git diff --name-status HEAD^ HEAD | grep '^A' | awk '{print $2}')
+          # Check if there is a previous commit
+          if [ $(git rev-list --count HEAD) -gt 1 ]; then
+            # Get the list of newly added files if there are previous commits
+            NEW_FILES=$(git diff --name-status HEAD^ HEAD | grep '^A' | awk '{print $2}')
+          else
+            # If this is the first commit, use the tree of the current commit
+            NEW_FILES=$(git ls-tree --name-only HEAD)
+          fi
           echo "new_files=${NEW_FILES}" >> $GITHUB_ENV
       
 
