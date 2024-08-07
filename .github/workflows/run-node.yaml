@@ -20,11 +20,11 @@ jobs:
       - name: Get new files
         id: get_new_files
         run: |
-          # Get the hash of the previous commit on the specific branch
-          PREVIOUS_COMMIT=$(git rev-parse your-branch-name^)
+          # Get the hash of the previous commit
+          PREVIOUS_COMMIT=$(git rev-parse HEAD^)
           
           # Get the list of newly added files
-          NEW_FILES=$(git diff --name-status $PREVIOUS_COMMIT your-branch-name | grep '^A' | awk '{print $2}' | tr '\n' ',')
+          NEW_FILES=$(git diff --name-status $PREVIOUS_COMMIT HEAD | grep '^A' | awk '{print $2}' | tr '\n' ',')
           
           # Check if any new files were found
           if [ -z "$NEW_FILES" ]; then
