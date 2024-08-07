@@ -10,15 +10,12 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
     const response = await axios.post(NOTION_API_URL, {}, {headers}); // 데이터베이스에서 페이지를 조회
     const pages = response.data.results;
 
-    console.log("newFileString:" + newFileString);
     newFiles = newFileString.split(',');
     newFiles.pop();
 
     for (const fileName of newFiles) {
       const problemName = fileName.split('.')[0];
       const targetPage = pages.find(page => page.properties.이름.title[0].plain_text === problemName);
-
-      console.log(targetPage);
 
       if (targetPage) {
         const pageId = targetPage.id;
