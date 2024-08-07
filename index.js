@@ -10,7 +10,7 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
     const response = await axios.post(NOTION_API_URL, {}, {headers}); // 데이터베이스에서 페이지를 조회
     const pages = response.data.results;
 
-    console.log(newFileString);
+    console.log("newFileString:" + newFileString);
     newFiles = newFileString.split(',').pop();
     console.log(newFiles);
 
@@ -57,4 +57,4 @@ function getHeaders() {
 const USER_NAME = process.env.USER_NAME;
 const NEW_FILES = process.env.NEW_FILES;
 
-updateCheckboxByName(USER_NAME, NEW_FILES, true);
+await updateCheckboxByName(USER_NAME, NEW_FILES, true);
