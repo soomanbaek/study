@@ -11,36 +11,31 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
     const pages = response.data.results;
 
     console.log(newFileString);
-    newFiles = newFileString.split(',');
+    newFiles = newFileString.split(',').pop();
 
-    console.log(newFiles);
+    for (const problemName of newFiles) {
+      const targetPage = pages.find(page => page.properties.이름.title[0].plain_text === problemName);
 
-    return;
+      console.log(targetPage);
 
-    newFiles.forEach(problemName => {
+      if (targetPage) {
+        const pageId = targetPage.id;
 
-    });
-    const targetPage = pages.find(page => page.properties.이름.title[0].plain_text === problemName);
-
-    console.log(targetPage);
-
-    if (targetPage) {
-      const pageId = targetPage.id;
-
-      // 체크박스 업데이트
-      const updateUrl = `https://api.notion.com/v1/pages/${pageId}`;
-      const updateData = {
-        "properties": {
-          [userName]: {
-            "checkbox": true
+        // 체크박스 업데이트
+        const updateUrl = `https://api.notion.com/v1/pages/${pageId}`;
+        const updateData = {
+          "properties": {
+            [userName]: {
+              "checkbox": true
+            }
           }
-        }
-      };
+        };
 
-      await axios.patch(updateUrl, updateData, {headers});
-      console.log(`"${problemName}"의 체크박스를 ${isChecked ? '체크' : '체크 해제'}했습니다.`);
-    } else {
-      console.log(`"${problemName}"라는 이름을 가진 페이지를 찾을 수 없습니다.`);
+        await axios.patch(updateUrl, updateData, {headers});
+        console.log(`"${problemName}"의 체크박스를 ${isChecked ? '체크' : '체크 해제'}했습니다.`);
+      } else {
+        console.log(`"${problemName}"라는 이름을 가진 페이지를 찾을 수 없습니다.`);
+      }
     }
   } catch (error) {
     console.error('오류 발생:', error.response ? error.response.data : error.message);
