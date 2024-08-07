@@ -29,10 +29,7 @@ async function run(userName, fileString) {
 }
 
 async function updateCheckbox(targetPage, userName) {
-  const pageId = targetPage.id;
-
-  // 체크박스 업데이트
-  const updateUrl = getUpdateUrl(pageId);
+  const updateUrl = getUpdateUrl(targetPage);
   const updateData = getUpdateData(userName);
   const headers = getHeaders();
 
@@ -61,8 +58,8 @@ function isEmptyTargetPage(targetPage) {
   return targetPage === undefined;
 }
 
-function getUpdateUrl(pageId) {
-  return NOTION_API_PAGE_URL + pageId;
+function getUpdateUrl(targetPage) {
+  return NOTION_API_PAGE_URL + targetPage.pageId;
 }
 
 function getUpdateData(userName) {
@@ -76,6 +73,7 @@ function getUpdateData(userName) {
 }
 
 async function getPages() {
+  const headers = getHeaders();
   const response = await axios.post(NOTION_API_DATABASE_URL, {}, {headers});
   const pages = response.data.results;
 
