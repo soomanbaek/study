@@ -3,7 +3,7 @@ const axios = require('axios');
 const NOTION_API_URL = "https://api.notion.com/v1/databases/db4ffb466e4f4889b0ee5d309ec1c3fe/query";
 const NOTION_API_KEY = "secret_xVKFAspLpkbWkQ7Tct2JmVNQl01mYCMqFv0gzqF2pl2";
 
-async function updateCheckboxByName(userName, newFileString, isChecked) {
+async function updateCheckbox(userName, newFileString) {
   try {
     const headers = getHeaders();
 
@@ -31,7 +31,7 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
         };
 
         await axios.patch(updateUrl, updateData, {headers});
-        console.log(`"${problemName}"의 체크박스를 ${isChecked ? '체크' : '체크 해제'}했습니다.`);
+        console.log(`"${problemName}"의 체크박스를 '체크'했습니다.`);
       } else {
         console.log(`"${problemName}"라는 이름을 가진 페이지를 찾을 수 없습니다.`);
       }
@@ -54,4 +54,4 @@ function getHeaders() {
 const USER_NAME = process.env.USER_NAME;
 const NEW_FILES = process.env.NEW_FILES;
 
-updateCheckboxByName(USER_NAME, NEW_FILES, true);
+updateCheckbox(USER_NAME, NEW_FILES);
