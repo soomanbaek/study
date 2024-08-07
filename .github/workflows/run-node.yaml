@@ -20,15 +20,18 @@ jobs:
       - name: Get new files
         id: get_new_files
         run: |
-          # Check if there is a previous commit
-          if [ $(git rev-list --count HEAD) -gt 1 ]; then
-            # Get the list of newly added files if there are previous commits
-            NEW_FILES=$(git diff --name-status HEAD~1 HEAD | grep '^A' | awk '{print $2}' | tr '\n' ',')
+          # Get the hash of the previous commit
+          PREVIOUS_COMMIT=$(git rev-parse HEAD^)
+          
+          # Get the list of newly added files
+          NEW_FILES=$(git diff --name-status $PREVIOUS_COMMIT HEAD | grep '^A' | awk '{print $2}' | tr '\n' ',')
+          
+          # Check if any new files were found
+          if [ -z "$NEW_FILES" ]; then
+            echo "new_files=" >> $GITHUB_ENV
           else
-            # If this is the first commit, list all files in the current commit
-            NEW_FILES=$(git ls-tree --name-only HEAD | tr '\n' ',')
+            echo "new_files=${NEW_FILES}" >> $GITHUB_ENV
           fi
-          echo "new_files=${NEW_FILES}" >> $GITHUB_ENV
       
 
       - name: Set branch name
