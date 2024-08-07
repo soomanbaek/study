@@ -13,7 +13,10 @@ async function updateCheckbox(userName, newFileString) {
     newFiles = newFileString.split(',');
     newFiles.pop();
 
-    for (const fileName of newFiles) {
+    for (const filePath of newFiles) {
+      const fileNameSplit = filePath.split('/');
+      const fileName = fileNameSplit.at(fileNameSplit.length - 1);
+
       const problemName = fileName.split('.')[0];
       const targetPage = pages.find(page => page.properties.이름.title[0].plain_text === problemName);
 
