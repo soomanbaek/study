@@ -57,4 +57,4 @@ function getHeaders() {
 const USER_NAME = process.env.USER_NAME;
 const NEW_FILES = process.env.NEW_FILES;
 
-await updateCheckboxByName(USER_NAME, NEW_FILES, true);
+updateCheckboxByName(USER_NAME, NEW_FILES, true);
