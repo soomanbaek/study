@@ -24,11 +24,6 @@ jobs:
           NEW_FILES=$(git diff-tree --no-commit-id --name-status -r HEAD | grep '^A' | awk '{print $2}')
           echo "new_files=$NEW_FILES" >> $GITHUB_ENV
 
-      - name: Set environment variables
-        env:
-          USER_NAME: ${{ github.ref }}
-          FILE_NAME: ${{ env.new_files }}
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -39,3 +34,6 @@ jobs:
 
       - name: Run application
         run: node index.js  # Node.js 애플리케이션 실행
+        env:
+          USER_NAME: ${{ github.ref }}
+          FILE_NAME: ${{ env.new_files }}
