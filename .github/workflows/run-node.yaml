@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # 모든 커밋 기록을 가져옵니다.
 
       - name: Get new files
         id: get_new_files
