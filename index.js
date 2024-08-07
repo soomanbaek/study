@@ -44,8 +44,8 @@ function extractFilePathsFromString(fileString) {
 }
 
 function extractFileNameFromPath(filePath) {
-  const fileNameSplit = filePath.split('/');
-  const fileName = fileNameSplit[fileNameSplit.length - 1];
+  const filePathSplit = filePath.split('/');
+  const fileName = filePathSplit[filePathSplit.length - 1];
 
   return fileName;
 }
@@ -59,7 +59,7 @@ function isEmptyTargetPage(targetPage) {
 }
 
 function getUpdateUrl(targetPage) {
-  return NOTION_API_PAGE_URL + targetPage.pageId;
+  return NOTION_API_PAGE_URL + targetPage.id;
 }
 
 function getUpdateData(userName) {
