@@ -14,6 +14,7 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
     newFiles = newFileString.split(',').pop();
 
     for (const problemName of newFiles) {
+      console.log(problemName);
       const targetPage = pages.find(page => page.properties.이름.title[0].plain_text === problemName);
 
       console.log(targetPage);
