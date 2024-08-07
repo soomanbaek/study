@@ -10,6 +10,7 @@ async function updateCheckboxByName(userName, newFileString, isChecked) {
     const response = await axios.post(NOTION_API_URL, {}, {headers}); // 데이터베이스에서 페이지를 조회
     const pages = response.data.results;
 
+    console.log(newFileString);
     newFiles = newFileString.split(',');
 
     console.log(newFiles);
