@@ -42,7 +42,7 @@ jobs:
           node-version: '20'
 
       - name: Run application
-        run: node ./.github/notion/index.js
+        run: node ./.github/notion-api/index.js
         env:
           USER_NAME: ${{ env.BRANCH_NAME }}
           FILE_NAME: ${{ env.NEW_FILES }}
