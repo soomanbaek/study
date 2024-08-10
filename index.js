@@ -8,13 +8,13 @@ const NEW_FILES = process.env.NEW_FILES;
 
 async function run(userName, fileString) {
   try {
-    const page = await getPage();
+    const pages = await getPages();
 
     filePaths = extractFilePathsFromString(fileString);
 
     for (const filePath of filePaths) {
       const problemName = getProblemName(filePath);
-      const targetPage = getTargetPage(page, problemName);
+      const targetPage = getTargetPage(pages, problemName);
 
       if(isEmptyTargetPage(targetPage)){
         console.log(`"${problemName}"라는 이름을 가진 페이지를 찾을 수 없습니다.`);
@@ -53,7 +53,7 @@ function extractFileNameFromPath(filePath) {
 }
 
 function getTargetPage(pages, problemName) {
-  return pages.find(page => page.properties.번호.title[0].plain_text === problemName);
+  return pages.find(page => page.properties.번호.rich_text[0].plain_text === problemName);
 }
 
 function isEmptyTargetPage(targetPage) {
@@ -74,12 +74,12 @@ function getUpdateData(userName) {
   };
 }
 
-async function getPage() {
+async function getPages() {
   const headers = getHeaders();
   const response = await axios.post(NOTION_API_DATABASE_URL, {}, {headers});
-  const page = response.data.results;
+  const pages = response.data.results;
 
-  return page;
+  return pages;
 }
 
 function getProblemName(filePath) {
