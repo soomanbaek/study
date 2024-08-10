@@ -1,18 +1,20 @@
 const axios = require('axios');
 
-const NOTION_API_DATABASE_URL = "https://api.notion.com/v1/databases/db4ffb466e4f4889b0ee5d309ec1c3fe/query";
-const NOTION_API_KEY = "secret_xVKFAspLpkbWkQ7Tct2JmVNQl01mYCMqFv0gzqF2pl2";
+const NOTION_API_DATABASE_URL = "https://api.notion.com/v1/databases/32be5ff7f3e943d2a3711c2639ed62d6/query";
+const NOTION_API_KEY = "secret_haIz3bCSJh9W29Od6jKCOlyC2qLajt99KzE6qchX65y";
 const NOTION_API_PAGE_URL = "https://api.notion.com/v1/pages/";
+const USER_NAME = process.env.USER_NAME;
+const NEW_FILES = process.env.NEW_FILES;
 
 async function run(userName, fileString) {
   try {
-    const pages = await getPages();
+    const page = await getPage();
 
     filePaths = extractFilePathsFromString(fileString);
 
     for (const filePath of filePaths) {
       const problemName = getProblemName(filePath);
-      const targetPage = getTargetPage(pages, problemName);
+      const targetPage = getTargetPage(page, problemName);
 
       if(isEmptyTargetPage(targetPage)){
         console.log(`"${problemName}"라는 이름을 가진 페이지를 찾을 수 없습니다.`);
@@ -51,7 +53,7 @@ function extractFileNameFromPath(filePath) {
 }
 
 function getTargetPage(pages, problemName) {
-  return pages.find(page => page.properties.이름.title[0].plain_text === problemName);
+  return pages.find(page => page.properties.번호.title[0].plain_text === problemName);
 }
 
 function isEmptyTargetPage(targetPage) {
@@ -72,12 +74,12 @@ function getUpdateData(userName) {
   };
 }
 
-async function getPages() {
+async function getPage() {
   const headers = getHeaders();
   const response = await axios.post(NOTION_API_DATABASE_URL, {}, {headers});
-  const pages = response.data.results;
+  const page = response.data.results;
 
-  return pages;
+  return page;
 }
 
 function getProblemName(filePath) {
@@ -94,8 +96,5 @@ function getHeaders() {
     "Notion-Version": "2022-06-28"
   };
 }
-
-const USER_NAME = process.env.USER_NAME;
-const NEW_FILES = process.env.NEW_FILES;
 
 run(USER_NAME, NEW_FILES);
