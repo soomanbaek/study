@@ -3,12 +3,9 @@ name: Run Node.js Application
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시할 때 실행
+      - main
       - 백수만
       - 김은호
-  pull_request:
-    branches:
-      - main  # main 브랜치에 대한 PR이 열릴 때 실행
 
 jobs:
   run-node:
@@ -18,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # 모든 커밋 기록을 가져옵니다.
+          fetch-depth: 0
 
       - name: Get new files
         id: get_new_files
@@ -34,9 +31,7 @@ jobs:
             echo "NEW_FILES=" >> $GITHUB_ENV
           else
             echo "NEW_FILES=${NEW_FILES}" >> $GITHUB_ENV
-          fi
-    
-      
+          fi      
 
       - name: Set branch name
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -44,13 +39,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # 사용할 Node.js 버전
-
-      - name: Install dependencies
-        run: npm install  # 필요한 경우 dependencies 설치
+          node-version: '20'
 
       - name: Run application
-        run: node index.js  # Node.js 애플리케이션 실행
+        run: node ./.github/notion/index.js
         env:
           USER_NAME: ${{ env.BRANCH_NAME }}
           FILE_NAME: ${{ env.NEW_FILES }}
