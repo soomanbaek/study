@@ -44,5 +44,7 @@ jobs:
       - name: Run application
         run: node ./.github/notion-api/index.js
         env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           USER_NAME: ${{ env.BRANCH_NAME }}
           FILE_NAME: ${{ env.NEW_FILES }}

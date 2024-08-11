@@ -1,13 +1,16 @@
 const axios = require('axios');
 
-const NOTION_API_DATABASE_URL = "https://api.notion.com/v1/databases/32be5ff7f3e943d2a3711c2639ed62d6/query";
-const NOTION_API_KEY = "secret_haIz3bCSJh9W29Od6jKCOlyC2qLajt99KzE6qchX65y";
-const NOTION_API_PAGE_URL = "https://api.notion.com/v1/pages/";
+const DATABASE_URL = process.env.DATABASE_URL;
+const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const USER_NAME = process.env.USER_NAME;
 const NEW_FILES = process.env.NEW_FILES;
+const NOTION_API_DATABASE_URL = `https://api.notion.com/v1/databases/${DATABASE_URL}/query`;
+const NOTION_API_PAGE_URL = "https://api.notion.com/v1/pages/";
 
 async function run(userName, fileString) {
   try {
+    console.log(DATABASE_URL);
+    console.log(NOTION_API_KEY);
     console.log(`NEW_FILE_STRING: ${fileString}`);
     const pages = await getPages();
 
